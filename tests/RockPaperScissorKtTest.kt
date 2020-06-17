@@ -101,5 +101,16 @@ internal class RockPaperScissorKtTest {
                 assertTrue(it[3].startsWith("Player 2 no. of draws: "))
             }
         }
+
+        @Test
+        fun `test resultsToStdout when results are all draws`() {
+            resultsToStdout(List(10) {0})
+            stdOutput.toString().split("\n").let {
+                assertTrue(it[0].startsWith("Player 1 no. of wins: 0"))
+                assertTrue(it[1].startsWith("Player 1 no. of draws: 10"))
+                assertTrue(it[2].startsWith("Player 2 no. of wins: 0"))
+                assertTrue(it[3].startsWith("Player 2 no. of draws: 10"))
+            }
+        }
     }
 }

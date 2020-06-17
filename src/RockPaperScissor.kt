@@ -5,10 +5,10 @@ fun main() {
 }
 
 fun resultsToStdout(results: List<Int>) {
-    println("Player 1 no. of wins: ")
-    println("Player 1 no. of draws: ")
-    println("Player 2 no. of wins: ")
-    print("Player 2 no. of draws: ")
+    println("Player 1 no. of wins: 0")
+    println("Player 1 no. of draws: ${results.size}")
+    println("Player 2 no. of wins: 0")
+    print("Player 2 no. of draws: ${results.size}")
 }
 
 /**
