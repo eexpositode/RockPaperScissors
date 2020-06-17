@@ -1,7 +1,7 @@
 import java.lang.RuntimeException
 import kotlin.random.Random
 
-fun main() {
+fun main(args: Array<String>) {
     getRandomActions(100).mapActionsToResults().resultsToStdout()
 }
 

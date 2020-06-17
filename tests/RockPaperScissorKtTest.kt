@@ -5,9 +5,38 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import java.lang.NumberFormatException
 import java.util.stream.Stream
 
 internal class RockPaperScissorKtTest {
+
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    inner class TestMain {
+        private val stdOutput: ByteArrayOutputStream by lazy { ByteArrayOutputStream() }
+
+        @BeforeEach
+        fun setUp() {
+            System.setOut(PrintStream(stdOutput))
+        }
+
+        @AfterEach
+        fun tearDown() {
+            System.setOut(System.out)
+            stdOutput.reset()
+        }
+
+        @Test
+        fun `test main without input parameters`() {
+            main(emptyArray())
+            assertTrue(stdOutput.toString().isNotBlank())
+        }
+
+        @Test
+        fun `test main with invalid input parameter`() {
+            assertThrows<NumberFormatException> { main(arrayOf("Hello")) }
+        }
+    }
 
     @Nested
     inner class TestGetRandomActions {
@@ -57,7 +86,7 @@ internal class RockPaperScissorKtTest {
 
         @Test
         fun `test mapActionsResult throws an Exception on unknown input action`() {
-            assertThrows(RuntimeException::class.java) { arrayListOf(5).mapActionsToResults() }
+            assertThrows<RuntimeException> { arrayListOf(5).mapActionsToResults() }
         }
     }
 
