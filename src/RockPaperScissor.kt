@@ -5,4 +5,4 @@ fun main() {
 //TODO playRockPaperScissor() : Void
 //TODO mapActionsToResult(actionPlayer1: Int, actionPlayer2: Int)
 //TODO getRandomActions(n: Int) : List<Int>
-fun getRandomActions() = listOf<Int>()
+fun getRandomActions() = listOf(1)
