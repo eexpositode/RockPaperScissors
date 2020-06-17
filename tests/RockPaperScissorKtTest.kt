@@ -52,5 +52,15 @@ class RockPaperScissorKtTest {
         fun `test mapActionsResult returns draw when both actions are rock`() {
             assertEquals(0, mapActionsToResult(0))
         }
+
+        @Test
+        fun `test mapActionsResult returns win when random action is paper`() {
+            assertEquals(1, mapActionsToResult(1))
+        }
+
+        @Test
+        fun `test mapActionsResult returns loss when random action is scissors`() {
+            assertEquals(2, mapActionsToResult(2))
+        }
     }
 }
