@@ -2,6 +2,8 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class RockPaperScissorKtTest {
 
@@ -38,7 +40,17 @@ class RockPaperScissorKtTest {
 
         @Test
         fun `test mapActionsToResult has a return value`() {
-            assertNotNull(mapActionsToResult())
+            assertNotNull(mapActionsToResult(0))
+        }
+
+        @Test
+        fun `test mapActionsToResult returns an integer`() {
+            assertTrue(mapActionsToResult(0) is Int)
+        }
+
+        @Test
+        fun `test mapActionsResult returns draw when both actions are rock`() {
+            assertEquals(0, mapActionsToResult(0))
         }
     }
 }
