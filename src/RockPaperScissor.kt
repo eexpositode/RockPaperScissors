@@ -1,9 +1,25 @@
 import java.lang.RuntimeException
 import kotlin.random.Random
 
+const val MIN_ROUND_COUNT = 100
+
+/**
+ * Plays Rock Paper Scissors
+ */
 fun main(args: Array<String>) {
-    getRandomActions(100).mapActionsToResults().resultsToStdout()
+    getRandomActions(getRoundsFromInputArguments(args)).mapActionsToResults().resultsToStdout()
 }
+
+/**
+ * Parse input arguments to a proper round count.
+ * @param args Input arguments containing the count of rounds in this game. If no input argument was found or
+ * its value is less than [MIN_ROUND_COUNT], MIN_ROUND_COUNT is returned instead.
+ * @throws NumberFormatException if input argument cannot be converted to an Int
+ * @return Int representing the round count in this game.
+ */
+fun getRoundsFromInputArguments(args: Array<String>) = args.firstOrNull()?.toInt()
+        ?.let { if (it < MIN_ROUND_COUNT) MIN_ROUND_COUNT else it }
+        ?: MIN_ROUND_COUNT
 
 /**
  * Given the amount of game rounds n, returns a random list of integer with size n

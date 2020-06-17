@@ -2,6 +2,7 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
@@ -39,6 +40,25 @@ internal class RockPaperScissorKtTest {
     }
 
     @Nested
+    inner class TestGetRoundsFromInputArguments {
+        @Test
+        fun `test get rounds when input is an empty array`() {
+            assertEquals(100, getRoundsFromInputArguments(emptyArray()))
+        }
+
+        @Test
+        fun `test get rounds when input is invalid`() {
+            assertThrows<NumberFormatException> { getRoundsFromInputArguments(arrayOf("Hello")) }
+        }
+
+        @ParameterizedTest
+        @CsvSource("50, 100", "300, 300")
+        fun `test get rounds when input is an empty array`(input: String, rounds: String) {
+            assertEquals(rounds.toInt(), getRoundsFromInputArguments(arrayOf(input)))
+        }
+    }
+
+    @Nested
     inner class TestGetRandomActions {
         @Test
         fun `test getRandomActions has a return value`() {
@@ -57,7 +77,7 @@ internal class RockPaperScissorKtTest {
 
         @Test
         fun `test getRandomActions returns a list with size n`() {
-            assertEquals(getRandomActions(10).size, 10)
+            assertEquals(10, getRandomActions(10).size)
         }
 
         @Test
