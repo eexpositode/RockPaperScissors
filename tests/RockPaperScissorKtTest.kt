@@ -1,11 +1,13 @@
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+import java.lang.RuntimeException
 
-class RockPaperScissorKtTest {
+internal class RockPaperScissorKtTest {
 
     @Nested
     inner class TestGetRandomActions {
@@ -26,7 +28,7 @@ class RockPaperScissorKtTest {
 
         @Test
         fun `test getRandomActions returns a list with size n`() {
-            assertTrue(getRandomActions(10).size == 10)
+            assertEquals(getRandomActions(10).size, 10)
         }
 
         @Test
@@ -48,19 +50,56 @@ class RockPaperScissorKtTest {
             assertTrue(mapActionsToResult(0) is Int)
         }
 
-        @Test
-        fun `test mapActionsResult returns draw when both actions are rock`() {
-            assertEquals(0, mapActionsToResult(0))
+        @ParameterizedTest
+        @CsvSource("0, 0", "1, 1", "2, 2")
+        fun `test mapActionsResult results`(input: Int, result: Int) {
+            assertEquals(result, mapActionsToResult(input))
         }
 
         @Test
-        fun `test mapActionsResult returns win when random action is paper`() {
-            assertEquals(1, mapActionsToResult(1))
+        fun `test mapActionsResult throws an Exception on unknown input action`() {
+            assertThrows(RuntimeException::class.java) { mapActionsToResult(5) }
+        }
+    }
+
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    inner class TestResultsToStdout {
+
+        private val stdOutput : ByteArrayOutputStream by lazy { ByteArrayOutputStream() }
+
+        @BeforeEach
+        fun setUp() {
+            System.setOut(PrintStream(stdOutput))
+        }
+
+        @AfterEach
+        fun tearDown() {
+            System.setOut(System.out)
+            stdOutput.reset()
         }
 
         @Test
-        fun `test mapActionsResult returns loss when random action is scissors`() {
-            assertEquals(2, mapActionsToResult(2))
+        fun `test resultsToStdout prints on the stout`() {
+            resultsToStdout(emptyList())
+            assertTrue(stdOutput.toString().isNotBlank())
+        }
+
+        @Test
+        fun `test resultsToStdout prints 4 lines`() {
+            resultsToStdout(emptyList())
+            assertEquals(4, stdOutput.toString().split("\n").size)
+        }
+
+        @Test
+        fun `test resultsToStdout prints wins and draws for each player`() {
+            resultsToStdout(emptyList())
+            stdOutput.toString().split("\n").let {
+                assertTrue(it[0].startsWith("Player 1 no. of wins: "))
+                assertTrue(it[1].startsWith("Player 1 no. of draws: "))
+                assertTrue(it[2].startsWith("Player 2 no. of wins: "))
+                assertTrue(it[3].startsWith("Player 2 no. of draws: "))
+            }
         }
     }
 }
