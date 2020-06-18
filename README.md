@@ -19,6 +19,12 @@ KEEP IT SIMPLE - remember: we're not looking for a full-blown business applicati
 - [x] Language: Kotlin, tests in a language and with a framework of your choice
 - [x] Approach: ideally "test-driven
 
+## Run it!
+
+Clone the git repository locally and open it using **Intellij**. The project will build and get ready to be executed.
+
+In order to set a custom input parameter just change the "Run Configuration" and enter the desired value under "Program Arguments" 
+
 ## Future work
 
 - [ ] Use enums to map actions instead of using Integers: 
@@ -35,4 +41,5 @@ KEEP IT SIMPLE - remember: we're not looking for a full-blown business applicati
 
 * [Kotlin](https://kotlinlang.org/)
 * [JUnit 5](https://junit.org/junit5/)
+* [Gradle](https://gradle.org/)
 * [IntelliJ IDE](https://www.jetbrains.com/idea/).
